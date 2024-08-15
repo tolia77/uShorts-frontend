@@ -1,15 +1,13 @@
-import {signupRequest} from "../services/backend/auth";
+import { useAuth } from "../hooks/auth";
 import {useState} from "react";
 
 export default function Signup() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [token, setToken] = useState("");
+    const auth = useAuth();
     function handleSubmit(e) {
         e.preventDefault()
-        signupRequest(email, password).then((res) => {
-            setToken(res.data["Authorization"]);
-        }).catch((err) => {
+        auth.signup(email, password).catch((err) => {
             console.log(err);
         })
     }
