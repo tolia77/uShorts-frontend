@@ -1,7 +1,7 @@
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.css';
+import './assets/styles/App.scss';
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ProfilesIndex from "./pages/profiles/ProfilesIndex";
