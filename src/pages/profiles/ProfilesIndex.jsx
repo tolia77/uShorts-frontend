@@ -1,13 +1,25 @@
 import {useAuth} from "../../hooks/auth";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {profilesIndexRequest} from "../../services/backend/profiles";
+import Forbidden from "../../components/errors/Forbidden";
 
 export default function ProfilesIndex() {
+    const [forbidden, setForbidden] = useState(false);
+    const [userList, setUserList] = useState([]);
     const auth = useAuth()
-    console.log(`TOKEN: ${auth.accessToken}`);
     useEffect(() => {
         profilesIndexRequest(auth.accessToken).then(res => {
             console.log(res)
-        }).catch(err => console.log(err));
+        }).catch(err => {
+            if(err.response.status === 403) {
+                setForbidden(true);
+            }
+            console.log(err)
+        });
     }, [])
+    return(
+        forbidden ? <Forbidden/> : <>
+
+        </>
+    )
 }

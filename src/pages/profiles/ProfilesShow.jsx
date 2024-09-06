@@ -1,0 +1,20 @@
+import {useParams} from "react-router-dom";
+import {useAuth} from "../../hooks/auth";
+import {useEffect, useState} from "react";
+import {profilesShowRequest} from "../../services/backend/profiles";
+
+export default function ProfilesShow({params}) {
+    const {profileId} = useParams()
+    const auth = useAuth()
+    const [profile, setProfile] = useState({})
+    useEffect(() => {
+        profilesShowRequest(auth.token, profileId).then(res =>{
+            setProfile(res.data.profile)
+        })
+    })
+    return(
+        <>
+
+        </>
+    )
+}

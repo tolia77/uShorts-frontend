@@ -8,13 +8,20 @@ export default function Login() {
     const auth = useAuth()
     function handleSubmit(e) {
         e.preventDefault()
-        auth.login(email, password).catch((err) => {
+        auth.login(email, password).then(res =>{
+
+        }).catch((err) => {
             console.log(err);
             if(err.response.status === 404) {
                 setStatus("Incorrect email");
             }
+            else if(err.response.status === 401) {
+                setStatus("Wrong password");
+            }
+            else if(err.response.status === 422) {
+                setStatus(err.response.data.toString());
+            }
         })
-
     }
 
     return (
