@@ -1,15 +1,17 @@
 import {useState} from "react";
 import {useAuth} from "../hooks/auth";
+import {useNavigate} from "react-router-dom";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [status, setStatus] = useState("");
+    const navigate = useNavigate();
     const auth = useAuth()
     function handleSubmit(e) {
         e.preventDefault()
         auth.login(email, password).then(res =>{
-
+            navigate("/")
         }).catch((err) => {
             console.log(err);
             if(err.response.status === 404) {

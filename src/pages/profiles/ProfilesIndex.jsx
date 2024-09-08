@@ -14,12 +14,13 @@ export default function ProfilesIndex() {
             if(err.response.status === 403) {
                 setForbidden(true);
             }
-            console.log(err)
         });
     }, [])
     return(
-        forbidden ? <Forbidden/> : <>
+        forbidden ?
+            <Forbidden/> :
+            <>
 
-        </>
+            </>
     )
 }

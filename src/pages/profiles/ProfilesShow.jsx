@@ -2,6 +2,7 @@ import {useParams} from "react-router-dom";
 import {useAuth} from "../../hooks/auth";
 import {useEffect, useState} from "react";
 import {profilesShowRequest} from "../../services/backend/profiles";
+import Profile from "../../components/Profile";
 
 export default function ProfilesShow({params}) {
     const {profileId} = useParams()
@@ -14,7 +15,7 @@ export default function ProfilesShow({params}) {
     })
     return(
         <>
-
+            <Profile profile={profile}/>
         </>
     )
 }
