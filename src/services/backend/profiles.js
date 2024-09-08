@@ -9,8 +9,8 @@ export async function profilesIndexRequest(jwt) {
     })
 }
 
-export async function profilesShowRequest(jwt, id) {
-    return await api.get(`profiles/${id}`, {
+export async function profilesShowRequest(jwt, name) {
+    return await api.get(`profiles/${name}`, {
         headers: {
             Authorization: jwt,
         }
