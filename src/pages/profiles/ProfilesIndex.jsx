@@ -1,24 +1,22 @@
 import {useAuth} from "../../hooks/auth";
 import {useEffect, useState} from "react";
 import {profilesIndexRequest} from "../../services/backend/profiles";
-import Forbidden from "../../components/errors/Forbidden";
+import ErrorComponent from "../../components/errors/ErrorComponent";
 
 export default function ProfilesIndex() {
-    const [forbidden, setForbidden] = useState(false);
+    const [error, setError] = useState({status: null, text: null});
     const [userList, setUserList] = useState([]);
     const auth = useAuth()
     useEffect(() => {
         profilesIndexRequest(auth.accessToken).then(res => {
             console.log(res)
         }).catch(err => {
-            if(err.response.status === 403) {
-                setForbidden(true);
-            }
+            setError({status: err.response.status, text: err.response.message})
         });
     }, [])
     return(
-        forbidden ?
-            <Forbidden/> :
+        error ?
+            <ErrorComponent status={error.status} text={error.text}/> :
             <>
 
             </>

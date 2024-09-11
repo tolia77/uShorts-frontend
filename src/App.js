@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ProfilesIndex from "./pages/profiles/ProfilesIndex";
 import ProfilesShow from "./pages/profiles/ProfilesShow";
+import ProfilesCreate from "./pages/profiles/ProfilesCreate";
 
 function App() {
   return(
@@ -16,7 +17,8 @@ function App() {
               <Route path={"login"} element={<Login/>}/>
               <Route path={"signup"} element={<Signup/>}/>
               <Route path={"profiles"} element={<ProfilesIndex/>}/>
-              <Route path={"profile/:name"} element={<ProfilesShow/>}/>
+              <Route path={"profiles/:name"} element={<ProfilesShow/>}/>
+              <Route path={"profiles/create"} element={<ProfilesCreate/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

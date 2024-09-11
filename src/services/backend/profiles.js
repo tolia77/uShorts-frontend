@@ -16,3 +16,11 @@ export async function profilesShowRequest(jwt, name) {
         }
     })
 }
+
+export async function profilesCreateRequest(jwt, formData) {
+    return await api.post("profiles", formData, {
+        headers: {
+            Authorization: jwt
+        }
+    })
+}

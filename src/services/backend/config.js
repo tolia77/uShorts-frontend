@@ -26,9 +26,8 @@ backendInstance.interceptors.request.use(async (config) => {
 backendInstance.interceptors.response.use(async (response) => {
     return response
 }, error => {
-    console.log(error)
     if(error.response.status === 401 && error.response.data === "You need to log in") {
         window.location.href = "/login"
     }
-    return error
+    throw error
 })
