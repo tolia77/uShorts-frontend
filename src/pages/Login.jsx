@@ -20,8 +20,8 @@ export default function Login() {
             else if(err.response.status === 401) {
                 setStatus("Wrong password");
             }
-            else if(err.response.status === 422) {
-                setStatus(err.response.data.toString());
+            else {
+                setStatus(err.response.data.toString() || err.response.statusText);
             }
         })
     }
@@ -31,8 +31,8 @@ export default function Login() {
             <h1>Login</h1>
             <p>{status}</p>
             <form onSubmit={handleSubmit}>
-                <input type={"email"} value={email} onChange={(e) => setEmail(e.target.value)}/>
-                <input type={"password"} value={password} onChange={(e) => setPassword(e.target.value)}/>
+                <input required type={"email"} value={email} onChange={(e) => setEmail(e.target.value)}/>
+                <input required type={"password"} value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <button type={"submit"}>Login</button>
             </form>
 

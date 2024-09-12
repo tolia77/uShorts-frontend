@@ -1,11 +1,13 @@
 import { useAuth } from "../hooks/auth";
 import {useState} from "react";
 import {redirect} from "react-router-dom";
+import {errorsToArray} from "../utils/responseHelpers";
+import UnprocessableEntity from "../components/errors/UnprocessableEntity";
 
 export default function Signup() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [status, setStatus] = useState("");
+    const [entityErrors, setEntityErrors] = useState({});
     const auth = useAuth();
     function handleSubmit(e) {
         e.preventDefault()
@@ -14,24 +16,17 @@ export default function Signup() {
         }).catch((err) => {
             console.log(err.response)
             if(err.response.status === 422) {
-                let text = ""
-                if(err.response.data.email) {
-                    text += `Email: ${err.response.data.email.join(", ")}\n`
-                }
-                if(err.response.data.password) {
-                    text += `Password: ${err.response.data.password.join(", ")}\n`
-                }
-                setStatus(text)
+                setEntityErrors(err.response.data)
             }
         })
     }
     return(
         <>
             <h1>Sign up</h1>
-            <p>{status}</p>
+            <UnprocessableEntity errors={entityErrors} />
             <form onSubmit={handleSubmit}>
-                <input type={"email"} value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input type={"password"} value={password} onChange={(e) => setPassword(e.target.value)} />
+                <input required type={"email"} value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input required type={"password"} value={password} onChange={(e) => setPassword(e.target.value)} />
                 <button type={"submit"}>Sign up</button>
             </form>
         </>
