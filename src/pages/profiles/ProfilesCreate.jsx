@@ -28,10 +28,9 @@ export default function ProfilesCreate() {
         })
     }
     return (
-        error.status && error.text ?
-            <ErrorComponent status={error.status} text={error.text}/> :
         <>
             <UnprocessableEntity errors={entityErrors}/>
+            {(error.status && error.text) && <ErrorComponent status={error.status} text={error.text}/>}
             <h1>Create Profile</h1>
             <form onSubmit={handleSubmit}>
                 <input required name="name"/>

@@ -1,12 +1,20 @@
 import React, {useState} from 'react';
-import {loginRequest, refreshRequest, signupRequest} from "../services/backend/auth";
+import {loginRequest, logoutRequest, signupRequest} from "../services/backend/auth";
 import {jwtDecode} from "jwt-decode";
 import useCookie from "../hooks/cookies";
 export const AuthContext = React.createContext(null);
 
 export default function AuthProvider({ children }) {
-    const { value: accessToken, setCookie: setAccessCookie } = useCookie("access_token");
-    const { value: refreshToken, setCookie: setRefreshCookie } = useCookie("refresh_token");
+    const {
+        value: accessToken,
+        setCookie: setAccessCookie,
+        removeCookie: removeAccessCookie
+    } = useCookie("access_token");
+    const {
+        value: refreshToken,
+        setCookie: setRefreshCookie,
+        removeCookie: removeRefreshCookie,
+    } = useCookie("refresh_token");
     async function login(email, password) {
         let res = await loginRequest(email, password)
         const jwt_access = res.data["Access-Token"]
@@ -20,24 +28,15 @@ export default function AuthProvider({ children }) {
         saveTokens(jwt_access, jwt_refresh)
     }
 
-    function logout() {
-        setAccessCookie("")
-        setRefreshCookie("")
-    }
+    async function logout() {
+        await logoutRequest(refreshToken)
+        removeAccessCookie()
+        removeRefreshCookie()
 
-    async function refreshAccessToken() {
-        let res = await refreshRequest()
-        const jwt_access = res.data["Access-Token"]
-        saveAccessToken(jwt_access)
     }
 
     function isSignedIn() {
-        return accessToken && refreshToken;
-    }
-
-    function tokenIsExpired() {
-        const accessExp = new Date(jwtDecode(accessToken).exp * 1000);
-        return accessExp < Date.now()
+        return !!refreshToken;
     }
 
     function saveTokens(jwt_access, jwt_refresh) {
@@ -55,5 +54,5 @@ export default function AuthProvider({ children }) {
         setRefreshCookie(`Bearer ${jwt_refresh}`, refreshExp);
     }
 
-    return <AuthContext.Provider value={{accessToken, refreshToken, login, signup, refreshAccessToken, logout, isSignedIn, tokenIsExpired}}>{children}</AuthContext.Provider>
+    return <AuthContext.Provider value={{accessToken, refreshToken, login, signup, logout, isSignedIn}}>{children}</AuthContext.Provider>
 }

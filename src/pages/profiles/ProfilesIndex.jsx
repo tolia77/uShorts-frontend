@@ -15,10 +15,8 @@ export default function ProfilesIndex() {
         });
     }, [])
     return(
-        error ?
-            <ErrorComponent status={error.status} text={error.text}/> :
-            <>
-
-            </>
+        <>
+            {(error.status && error.text) && <ErrorComponent status={error.status} text={error.text}/>}
+        </>
     )
 }

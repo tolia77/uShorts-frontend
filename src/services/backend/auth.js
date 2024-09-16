@@ -22,3 +22,11 @@ export async function refreshRequest(refreshToken) {
         }
     })
 }
+
+export async function logoutRequest(refreshToken){
+    return await api.get("logout", {
+        headers: {
+            Authorization: refreshToken
+        }
+    })
+}

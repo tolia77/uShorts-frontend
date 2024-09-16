@@ -18,9 +18,8 @@ export default function ProfilesShow() {
         })
     }, [])
     return(
-        error.status && error.text ?
-            <ErrorComponent status={error.status} text={error.text}/> :
         <>
+            {(error.status && error.text) && <ErrorComponent status={error.status} text={error.text}/>}
             <Profile profile={profile}/>
         </>
     )

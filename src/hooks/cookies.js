@@ -6,15 +6,21 @@ export default function useCookie(name) {
     useEffect(() => {
         const cookie = Cookies.get(name);
         setValue(cookie);
-    }, [name]); // Ensure the effect runs if the cookie name changes
+    }, [name]);
 
     function setCookie(newValue, expires) {
         setValue(newValue);
         Cookies.set(name, newValue, { secure: true, expires: expires });
     }
 
+    function removeCookie() {
+        setValue("")
+        Cookies.remove(name, {path: "/"});
+    }
+
     return {
         value,
-        setCookie
+        setCookie,
+        removeCookie
     };
 }
