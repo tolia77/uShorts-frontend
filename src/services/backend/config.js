@@ -9,7 +9,7 @@ export const backendInstance = axios.create({
 
 backendInstance.interceptors.request.use(async (config) => {
     //TODO: handle errors
-    if (config.url !== "refresh") {
+    if (config.url !== "refresh" && config.url !== "logout") {
         const accessToken = Cookies.get("access_token");
         const refreshToken = Cookies.get("refresh_token");
         if (refreshToken && !accessToken) {

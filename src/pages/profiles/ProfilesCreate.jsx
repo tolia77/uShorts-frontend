@@ -2,13 +2,11 @@ import {useState} from "react";
 import {profilesCreateRequest} from "../../services/backend/profiles";
 import {useAuth} from "../../hooks/auth";
 import {useNavigate} from "react-router-dom";
-import ErrorComponent from "../../components/errors/ErrorComponent";
 import UnprocessableEntity from "../../components/errors/UnprocessableEntity";
 
 export default function ProfilesCreate() {
     const auth = useAuth()
     const navigate = useNavigate();
-    const [error, setError] = useState({status: "", text: ""});
     const [entityErrors, setEntityErrors] = useState({});
     function handleSubmit(e) {
         e.preventDefault();
@@ -22,15 +20,16 @@ export default function ProfilesCreate() {
             navigate("/profiles/" + res.data.profile.name)
         }).catch(err => {
             if(err.response.status === "422") {
-                console.log(err)
                 setEntityErrors(err.response.data)
+            }
+            else {
+                throw err;
             }
         })
     }
     return (
         <>
             <UnprocessableEntity errors={entityErrors}/>
-            {(error.status && error.text) && <ErrorComponent status={error.status} text={error.text}/>}
             <h1>Create Profile</h1>
             <form onSubmit={handleSubmit}>
                 <input required name="name"/>

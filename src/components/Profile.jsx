@@ -5,7 +5,7 @@ export default function Profile({ profile }) {
             <p>{profile.description}</p>
             <p>followers: {profile.followers_count}</p>
             <p>followees: {profile.followees_count}</p>
-            <img src={profile.avatar_url}/>
+            {profile.avatar_url && <img alt={"profile"} src={profile.avatar_url}/>}
         </div>
     )
 }
