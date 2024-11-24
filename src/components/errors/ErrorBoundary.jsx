@@ -1,6 +1,7 @@
 import React from 'react';
 import Forbidden from "./Forbidden";
 import NotFound from "./NotFound";
+import {Navigate} from "react-router-dom";
 
 export default class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -11,7 +12,6 @@ export default class ErrorBoundary extends React.Component {
         };
     }
     static getDerivedStateFromError(error) {
-        console.log("1111");
         return {
             hasError: true,
             error: error,
@@ -19,7 +19,6 @@ export default class ErrorBoundary extends React.Component {
     }
 
     componentDidCatch(error, errorInfo) {
-        // You can also log the error to an error reporting service
         console.log(error);
     }
 
@@ -31,6 +30,9 @@ export default class ErrorBoundary extends React.Component {
                 }
                 else if(this.state.error.response.status === 404) {
                     return <NotFound/>
+                }
+                else if(this.state.error.response.status === 401 && this.state.error.response.data === "You need to log in") {
+                    return <Navigate to={"/"} replace={true} />
                 }
             }
             return <h1>Something went wrong.</h1>;

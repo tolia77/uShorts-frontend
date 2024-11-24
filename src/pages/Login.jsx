@@ -13,7 +13,6 @@ export default function Login() {
         auth.login(email, password).then(res =>{
             navigate("/")
         }).catch((err) => {
-            console.log(err);
             if(err.response.status === 404) {
                 setStatus("Incorrect email");
             }
