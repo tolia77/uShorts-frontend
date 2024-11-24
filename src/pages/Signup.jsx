@@ -8,7 +8,8 @@ export default function Signup() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [entityErrors, setEntityErrors] = useState({});
-    const [error, setError] = useState({status: "", text: ""});
+    const [error, setError] = useState(null);
+    if(error) throw error;
     const auth = useAuth();
     function handleSubmit(e) {
         e.preventDefault()
@@ -19,7 +20,7 @@ export default function Signup() {
                 setEntityErrors(err.response.data)
             }
             else {
-                setError({status: err.response.status, text: err.response.data});
+                setError(err);
             }
         })
     }
@@ -27,7 +28,6 @@ export default function Signup() {
         <>
             <h1>Sign up</h1>
             <UnprocessableEntity errors={entityErrors} />
-            {(error.status && error.text) && <ErrorComponent status={error.status} text={error.text}/>}
             <form onSubmit={handleSubmit}>
                 <input required type={"email"} value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input required type={"password"} value={password} onChange={(e) => setPassword(e.target.value)} />

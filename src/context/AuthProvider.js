@@ -15,6 +15,7 @@ export default function AuthProvider({ children }) {
         setCookie: setRefreshCookie,
         removeCookie: removeRefreshCookie,
     } = useCookie("refresh_token");
+
     async function login(email, password) {
         let res = await loginRequest(email, password)
         const jwt_access = res.data["Access-Token"]
@@ -27,12 +28,10 @@ export default function AuthProvider({ children }) {
         const jwt_refresh = res.data["Refresh-Token"]
         saveTokens(jwt_access, jwt_refresh)
     }
-
     async function logout() {
         await logoutRequest(refreshToken)
         removeAccessCookie()
         removeRefreshCookie()
-
     }
 
     function isSignedIn() {

@@ -1,7 +1,7 @@
-import {errorsToArray} from "../../utils/responseHelpers";
+import {entityErrorsToArray} from "../../utils/responseHelpers";
 
 export default function UnprocessableEntity({errors}) {
-    let arr = errorsToArray(errors).map(err =>
+    let arr = entityErrorsToArray(errors).map(err =>
         <div className="error">
             <p>{err}</p>
         </div>

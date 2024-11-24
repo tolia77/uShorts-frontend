@@ -1,4 +1,4 @@
-export function errorsToArray(data) {
+export function entityErrorsToArray(data) {
     let arr = Object.keys(data)
     let result = []
     arr.forEach((key) => {

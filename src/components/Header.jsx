@@ -4,7 +4,7 @@ import {useAuth} from "../hooks/auth";
 export default function Header() {
     const auth = useAuth();
     return(
-        <nav>
+        <nav style={{backgroundColor: "gray"}}>
             <h1>Header</h1>
             {
                 auth.isSignedIn() ?
