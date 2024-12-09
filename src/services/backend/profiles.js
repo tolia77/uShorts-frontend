@@ -17,6 +17,14 @@ export async function profilesShowRequest(jwt, name) {
     })
 }
 
+export async function profilesSearchRequest(jwt, key, page) {
+    return await api.get(`profiles/search?key=${key}&page=${page}`, {
+        headers: {
+            Authorization: jwt,
+        }
+    })
+}
+
 export async function profilesCreateRequest(jwt, formData) {
     return await api.post("profiles", formData, {
         headers: {
